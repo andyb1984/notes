@@ -16,7 +16,7 @@
     async function saveNote() {
       const content = document.getElementById("note").value;
 
-      const response = await fetch("YOUR_BACKEND_URL", {
+      const response = await fetch("https://notes-gilt-chi.vercel.app", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
