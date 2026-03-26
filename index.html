@@ -46,6 +46,14 @@
     // ✅ CONFIGURE THESE
     const GIST_ID = "https://gist.github.com/andyb1984/185a7d3d1ec94e628cc281581633efc8";
     const FILE_NAME = "notes.txt";
-  
+
+  let GITHUB_TOKEN = localStorage.getItem("github_token");
+
+  if (!GITHUB_TOKEN) {
+    GITHUB_TOKEN = prompt("Enter GitHub token (stored locally only):");
+    localStorage.setItem("github_token", GITHUB_TOKEN);
+  }
+</script>
+    
 </body>
 </html>
