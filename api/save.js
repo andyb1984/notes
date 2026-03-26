@@ -15,8 +15,8 @@ export default async function handler(req, res) {
 
   const { content } = req.body;
 
-  const owner = "YOUR_GITHUB_USERNAME"; // replace
-  const repo = "notes-app";             // replace
+  const owner = "andyb1984"; // replace
+  const repo = "notes";             // replace
   const path = "notes.txt";
 
   try {
