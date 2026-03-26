@@ -10,6 +10,28 @@
   <p id="status"></p>
 
   <script>
+  async function loadNote() {
+  try {
+    const response = await fetch("https://api.github.com/repos/andyb1984/notes/contents/notes.txt", {
+      headers: {
+        Accept: "application/vnd.github.v3.raw"
+      }
+    });
+    if (response.ok) {
+      const text = await response.text();
+      document.getElementById("note").value = text;
+    } else {
+      document.getElementById("note").value = ""; // empty if file not found
+    }
+  } catch (err) {
+    console.error("Error loading note:", err);
+  }
+}
+
+// Call on page load
+window.onload = loadNote;
+    
+    
     async function saveNote() {
       const content = document.getElementById("note").value;
 
