@@ -1,59 +1,32 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
   <title>My Notes</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f3f4f6;
-      margin: 0;
-      padding: 2rem;
-    }
-    .card {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    }
-    textarea {
-      width: 100%;
-      height: 60vh;
-      font-size: 14px;
-      padding: 1rem;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      resize: vertical;
-    }
-    .status {
-      margin-top: 0.5rem;
-      font-size: 12px;
-      color: #555;
-    }
-  </style>
 </head>
 <body>
-  <div class="card">
-    <h2>My Notes</h2>
-    <textarea id="notes" placeholder="Loading…"></textarea>
-    <div class="status" id="status">Idle</div>
-  </div>
+  <h1>My Notes</h1>
+
+  <textarea id="note" rows="15" cols="60"></textarea><br><br>
+
+  <button onclick="saveNote()">Save</button>
+
+  <p id="status"></p>
 
   <script>
-    // ✅ CONFIGURE THESE
-    const GIST_ID = "https://gist.github.com/andyb1984/185a7d3d1ec94e628cc281581633efc8";
-    const FILE_NAME = "notes.txt";
+    async function saveNote() {
+      const content = document.getElementById("note").value;
 
-  let GITHUB_TOKEN = localStorage.getItem("github_token");
+      const response = await fetch("YOUR_BACKEND_URL", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ content })
+      });
 
-  if (!GITHUB_TOKEN) {
-    GITHUB_TOKEN = prompt("Enter GitHub token (stored locally only):");
-    localStorage.setItem("github_token", GITHUB_TOKEN);
-  }
-</script>
-    
+      const result = await response.text();
+      document.getElementById("status").innerText = result;
+    }
+  </script>
 </body>
 </html>
