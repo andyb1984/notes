@@ -1,16 +1,21 @@
 A blog to address key components of future energy systems:
+
 1. Renewables
 Discuss offshore wind
 Discuss rooftop solar and my own experience
+
 2. Gas extension
 Discuss dispatch ability
 Discuss carbon emission intensity and global supply- gas is widely available
+
 3. Hydrogen as an energy carrier
 Discuss energy loss
 Discuss practicalities- cavern stores, pipelines
+
 4. CCS as a get out of jail free card
 Framed as job creation/retention of powerful oil and gas industry.
 But can be key to provide certain products in a low carbon future
+
 5. Nuclear power as the ultimate solution
 
 ------------------------------------------------------------------
