@@ -1,3 +1,20 @@
+A blog to address key components of future energy systems:
+1. Renewables
+Discuss offshore wind
+Discuss rooftop solar and my own experience
+2. Gas extension
+Discuss dispatch ability
+Discuss carbon emission intensity and global supply- gas is widely available
+3. Hydrogen as an energy carrier
+Discuss energy loss
+Discuss practicalities- cavern stores, pipelines
+4. CCS as a get out of jail free card
+Framed as job creation/retention of powerful oil and gas industry.
+But can be key to provide certain products in a low carbon future
+5. Nuclear power as the ultimate solution
+
+------------------------------------------------------------------
+
 So I have just submitted my final MBA assignment- what now? 
 
 I’ve started chatting to Chaptie about expanding my mind- they've suggested reading Daniel Kahneman and Yuval Noah Harari. It is also suggested that I actually write things- like this dump of words- rather than simply become a consumer. 
@@ -53,20 +70,7 @@ Every few weeks, step back and ask:
 
 
 
-A blog to address key components of future energy systems:
-1. Renewables
-Discuss offshore wind
-Discuss rooftop solar and my own experience
-2. Gas extension
-Discuss dispatch ability
-Discuss carbon emission intensity and global supply- gas is widely available
-3. Hydrogen as an energy carrier
-Discuss energy loss
-Discuss practicalities- cavern stores, pipelines
-4. CCS as a get out of jail free card
-Framed as job creation/retention of powerful oil and gas industry.
-But can be key to provide certain products in a low carbon future
-5. Nuclear power as the ultimate solution
+
 
 
 
