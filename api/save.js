@@ -30,7 +30,7 @@ export default async function handler(req, res) {
 
   try {
     const headers = {
-      Authorization: `token ${token}`,
+      Authorization: `Bearer ${token}`,
       Accept: "application/vnd.github+json",
       "Content-Type": "application/json"
     };
