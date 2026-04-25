@@ -32,22 +32,23 @@
 window.onload = loadNote;
     
     
-    async function saveNote() {
-      const content = document.getElementById("note").value;
+async function saveNote() {
+  const content = document.getElementById("note").value;
 
-      try {
-        const response = await fetch("/api/save", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content })
-        });
+  try {
+    // USE THE FULL VERCEL URL HERE
+    const response = await fetch("https://andyb1984-notes.vercel.app/api/save", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ content })
+    });
 
-        const result = await response.text();
-        document.getElementById("status").innerText = result;
-      } catch (err) {
-        document.getElementById("status").innerText = "Error: " + err.message;
-      }
-    }
+    const result = await response.text();
+    document.getElementById("status").innerText = result;
+  } catch (err) {
+    document.getElementById("status").innerText = "Error: " + err.message;
+  }
+}
   </script>
 </body>
 </html>
