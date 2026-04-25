@@ -10,36 +10,49 @@ export default async function handler(req, res) {
     return;
   }
 
-  const token = "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";
-  if (!token) return res.status(500).send("GitHub token not set");
+  // 🔴 PUT YOUR NEW TOKEN HERE
+  const token = "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";
+
+  if (!token) {
+    return res.status(500).send("GitHub token not set");
+  }
 
   const { content } = req.body;
 
-  const owner = "andyb1984"; // replace
-  const repo = "notes";             // replace
+  const owner = "andyb1984";
+  const repo = "notes";
   const path = "notes.txt";
 
   try {
+    const headers = {
+      Authorization: `token ${token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+    };
+
     // Get current file SHA
-    const getFile = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const getFile = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+      { headers }
+    );
+
     const fileData = await getFile.json();
+
     const sha = fileData.sha;
 
-    // Update the file
-    const updated = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: "Update notes",
-        content: Buffer.from(content).toString("base64"),
-        sha: sha
-      })
-    });
+    // Update file
+    const updated = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+      {
+        method: "PUT",
+        headers,
+        body: JSON.stringify({
+          message: "Update notes",
+          content: Buffer.from(content).toString("base64"),
+          sha: sha,
+        }),
+      }
+    );
 
     if (updated.ok) {
       res.status(200).send("Saved!");
