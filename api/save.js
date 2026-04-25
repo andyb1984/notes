@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
-  // 1. Setup CORS
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Change "*" to your specific github.io URL for better security, 
+  // or keep "*" to allow it to work from anywhere.
+  res.setHeader("Access-Control-Allow-Origin", "*"); 
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
