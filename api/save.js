@@ -68,10 +68,7 @@ export default async function handler(req, res) {
       return res.status(500).send("Error saving: " + err);
     }
 
-    return res.status(200).send({
-  tokenStartsWith: token?.slice(0, 10),
-  hasToken: !!token
-});
+    return res.status(200).send("Saved!");
   } catch (error) {
     return res.status(500).send("Server error: " + error.message);
   }
