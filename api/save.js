@@ -16,7 +16,8 @@ export default async function handler(req, res) {
   }
 
   // Pull token securely from Vercel Environment Variables
-  const token = process.env.GITHUB_TOKEN;
+  / This forces the token to be clean of any hidden spaces
+const token = process.env.GITHUB_TOKEN ? process.env.GITHUB_TOKEN.trim() : null;
 
   if (!token) {
     return res.status(500).send("Missing GITHUB_TOKEN environment variable");
