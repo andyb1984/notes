@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  const token = "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";
+  const token = "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";
   if (!token) return res.status(500).send("GitHub token not set");
 
   const { content } = req.body;
