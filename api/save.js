@@ -1,20 +1,25 @@
 // /api/save.js
 export default async function handler(req, res) {
-  // Allow CORS so frontend can call it
+  // Allow frontend requests
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
+  // Handle browser preflight request
   if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
+    return res.status(200).end();
   }
 
-  // 🔴 PUT YOUR NEW TOKEN HERE
-  const token = "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";
+  // Only allow POST
+  if (req.method !== "POST") {
+    return res.status(405).send("Method not allowed");
+  }
+
+  // Pull token securely from Vercel Environment Variables
+  const token = process.env.GITHUB_TOKEN;
 
   if (!token) {
-    return res.status(500).send("GitHub token not set");
+    return res.status(500).send("Missing GITHUB_TOKEN environment variable");
   }
 
   const { content } = req.body;
@@ -27,40 +32,44 @@ export default async function handler(req, res) {
     const headers = {
       Authorization: `token ${token}`,
       Accept: "application/vnd.github+json",
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     };
 
-    // Get current file SHA
+    // Step 1: Get existing file SHA
     const getFile = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
       { headers }
     );
 
-    const fileData = await getFile.json();
+    if (!getFile.ok) {
+      const err = await getFile.text();
+      return res.status(500).send("Error reading file: " + err);
+    }
 
+    const fileData = await getFile.json();
     const sha = fileData.sha;
 
-    // Update file
-    const updated = await fetch(
+    // Step 2: Update file
+    const updateFile = await fetch(
       `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
       {
         method: "PUT",
         headers,
         body: JSON.stringify({
           message: "Update notes",
-          content: Buffer.from(content).toString("base64"),
-          sha: sha,
-        }),
+          content: Buffer.from(content || "").toString("base64"),
+          sha: sha
+        })
       }
     );
 
-    if (updated.ok) {
-      res.status(200).send("Saved!");
-    } else {
-      const errText = await updated.text();
-      res.status(500).send("Error saving: " + errText);
+    if (!updateFile.ok) {
+      const err = await updateFile.text();
+      return res.status(500).send("Error saving: " + err);
     }
-  } catch (err) {
-    res.status(500).send("Error: " + err.message);
+
+    return res.status(200).send("Saved!");
+  } catch (error) {
+    return res.status(500).send("Server error: " + error.message);
   }
 }
