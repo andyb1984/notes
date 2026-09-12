@@ -1,3 +1,22 @@
+| Register Address | Telemetry Parameter | Data Type | Scale Factor | Unit / Notes |
+|---|---|---|---|---|
+| 4100 | Total PV Power | uint16 | 1 | Watts |
+| 4112 | MPPT1 Voltage | uint16 | 0.1 | Volts |
+| 4113 | MPPT1 Current | uint16 | 0.01 | Amps |
+| 4115 | MPPT1 Power / Home Load | uint16 | 1 | Watts |
+| 4871 | Grid Active Power | int16 | 1 | Watts (+ Import / - Export) |
+| 4890 | Grid Voltage | uint16 | 0.1 | Volts |
+| 4894 | Grid / CT Current | int16 | 0.01 | Amps |
+| 8192 | Battery State of Charge (SoC) | uint16 | 1 | % |
+| 8198 | Battery Voltage | uint16 | 0.1 | Volts |
+| 8200 | Battery Current | int16 | 0.01 | Amps (+ Charge / - Discharge) |
+| 8202 | Battery Power | int16 | 1 | Watts |
+| 8214 | Daily Yield / Energy Generation | uint16 | 0.1 | kWh |
+
+
+
+
+
 https://wirgdata.org/files/Thursley%20Ironworks%20(Inc%20Horsebane%20Hammer)_1.pdf
 
 https://www.thursleyhistorysociety.org/post/the-later-history-of-the-wealden-iron-forge-at-thursley
