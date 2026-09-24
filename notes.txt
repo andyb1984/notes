@@ -1,3 +1,6 @@
+https://bristoluniversitypressdigital.com/downloadpdf/monobook-oa/book/9781529247312/9781529247312.pdf
+
+
 | Register Address | Telemetry Parameter | Data Type | Scale Factor | Unit / Notes |
 |---|---|---|---|---|
 | 4100 | Total PV Power | uint16 | 1 | Watts |
