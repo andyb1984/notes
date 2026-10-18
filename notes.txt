@@ -1,3 +1,93 @@
+import asyncio
+import csv
+import os
+import time
+from datetime import datetime
+from pyhiveapi import Hive
+
+# --- CONFIGURATION ---
+HIVE_USERNAME = "your_hive_email@example.com"
+HIVE_PASSWORD = "your_hive_password"
+
+# Polling interval (300 seconds = 5 minutes)
+POLL_INTERVAL = 300  
+CSV_FILE = "hive_heating_data.csv"
+
+async def get_hive_metrics(hive_instance):
+    """Pulls current heating metrics from the primary thermostat."""
+    try:
+        # Force the library to fetch fresh values from Hive cloud servers
+        await hive_instance.force_update()
+        
+        # Verify that heating devices are available
+        if hive_instance.heating.list:
+            # Grab the primary thermostat zone
+            thermostat = hive_instance.heating.list[0]
+            
+            return {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "current_temperature": thermostat.current_temperature,
+                "target_temperature": thermostat.target_temperature,
+                "state": thermostat.state,       # e.g., 'HEAT' or 'OFF'
+                "mode": thermostat.mode,         # e.g., 'MANUAL' or 'SCHEDULE'
+                "boiler_status": "ON" if thermostat.state == "HEAT" else "OFF"
+            }
+    except Exception as e:
+        print(f"[{datetime.now()}] Error updating Hive data: {e}")
+        return None
+
+def save_to_csv(data):
+    """Appends the data row into a local CSV file."""
+    file_exists = os.path.isfile(CSV_FILE)
+    
+    with open(CSV_FILE, mode="a", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=data.keys())
+        
+        # Write the header row only if creating a new file
+        if not file_exists:
+            writer.writeheader()
+            
+        writer.writerow(data)
+    print(f"[{data['timestamp']}] Data point stored successfully.")
+
+async def main():
+    print("Initialising Hive API session...")
+    hive = Hive(username=HIVE_USERNAME, password=HIVE_PASSWORD)
+    
+    try:
+        await hive.startSession()
+        print(f"Authentication successful. Monitoring started (Interval: {POLL_INTERVAL}s)...")
+        
+        while True:
+            start_time = time.time()
+            
+            # Fetch data
+            metrics = await get_hive_metrics(hive)
+            
+            # Save data if valid
+            if metrics:
+                save_to_csv(metrics)
+            
+            # Precise sleep calculations to account for script execution time
+            elapsed = time.time() - start_time
+            sleep_time = max(0, POLL_INTERVAL - elapsed)
+            await asyncio.sleep(sleep_time)
+            
+    except KeyboardInterrupt:
+        print("\nScript stopped by user. Cleaning up...")
+    except Exception as e:
+        print(f"Fatal error in execution loop: {e}")
+    finally:
+        # Cleanly close the session connection to avoid leaking sockets
+        await hive.closeSession()
+        print("Hive session closed.")
+
+if __name__ == "__main__":
+    asyncio.run(main())
+
+
+
+
 https://bristoluniversitypressdigital.com/downloadpdf/monobook-oa/book/9781529247312/9781529247312.pdf
 
 
